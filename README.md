@@ -1,2 +1,2 @@
 # slcms
-SLCMS for Stitpragya
+SLCMS From Stitpragya Technologies
