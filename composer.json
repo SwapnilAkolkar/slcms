@@ -1,0 +1,22 @@
+{
+    "name": "stitpragya/slcms",
+    "description": "Stitpragya LightWeight CMS",
+    "require": {
+        "codeigniter4/framework": "^4.3"
+    },
+    "require-dev": {
+        "codeigniter4/framework": "^4.3"
+    },
+    "license": "MIT 3.0",
+    "autoload": {
+        "psr-4": {
+            "Stitpragya\\Slcms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Stitprgya Technologies"
+        }
+    ],
+    "minimum-stability": "beta"
+}
