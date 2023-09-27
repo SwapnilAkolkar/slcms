@@ -1,15 +1,14 @@
-# CodeIgniter 4 Framework
+# CodeIgniter 4 Framework Based SLCMS
 
-## What is CodeIgniter?
+## What is SLCMS?
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+SLCMS is utility to build the dynmic sites faster with help of inbuilt CRUD builder along with power of CodeIgniter.
+This comes along with CodeIgniter pre installed. This is first tested on 15 + sites by Stitpragya Technologies. Now it is made available to public.
+More information can be found at the [official site](https://slcms.stitpragya.in).
 
 This repository holds the distributable version of the framework.
 It has been built from the
 [development repository](https://github.com/codeigniter4/CodeIgniter4).
-
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
 
 The user guide corresponding to the latest version of the framework can be found
 [here](https://codeigniter4.github.io/userguide/).
