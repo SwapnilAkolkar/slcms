@@ -108,46 +108,38 @@ class {ClassName} extends BaseController
         }
         $data['records']=$model->findAll();
         $data['bread']='Add/Edit {Name}';
+        $data['title']='{Name}';
+        
         {SelectDBModelsData}
         return view($this->role.'/{folder}/add_edit',$data);
         
     }
     
     
-        public function Store()
+    public function Store()
+    {
+        session()->setFlashdata("mtype", "warning");
+        $id=(null !== $this->request->getVar('id'))?$this->request->getVar('id'):0;
+        $model=new {ModelClassName}();
+        $data=[
+            {StoreFields}
+            ];
+        if($id>0)
+        $data['id']=$id;
+        foreach ($data as $key => $val)
         {
-            session()->setFlashdata("mtype", "warning");
-            $id=(null !== $this->request->getVar('id'))?$this->request->getVar('id'):0;
-            $model=new {ModelClassName}();
-            $data=[
-                {StoreFields}
-                ];
-            if($id>0)
-            $data['id']=$id;
-            foreach ($data as $key => $val)
+            if($val=="" || $val==NULL)
             {
-                if($val=="" || $val==NULL)
-                {
-                    session()->setFlashdata("message", "The ".$key." is Must For Job Post");
-                    return redirect()->back()->withInput();
-                }
-            }    
-                {UploadFields}
-                $model->save($data);
-                session()->setFlashdata("mtype", "success");
-                session()->setFlashdata("message", " {Name} Stored Successfully!");
-                return redirect()->to(base_url('/{ClassName}'));
-        }
-        
-        
-        public function delete($id)
-        {
-            $model=new {ModelClassName}();
-            $model->where('id',$id)->delete();
+                session()->setFlashdata("message", "The ".$key." is Must For Job Post");
+                return redirect()->back()->withInput();
+            }
+        }    
+            {UploadFields}
+            $model->save($data);
             session()->setFlashdata("mtype", "success");
-            session()->setFlashdata("message", " {Name} Deleted Successfully!");
-            return redirect()->to(base_url('/{ClassName}'));
-            
+            session()->setFlashdata("message", " {Name} Stored Successfully!");
+                     return redirect()->to(base_url('/{ClassName}'));
         }
+        
     
     }

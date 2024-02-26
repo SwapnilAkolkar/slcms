@@ -12,11 +12,25 @@ class Generator extends BaseController
     public $fields;
     public function index()
     {
-        $faicons=FontAwaysome::getAllIcons();
+        $faicons=FontAwaysome::fafiveicons();
+        $fa=$faicons['fa'];
+        $classes=[
+          'fab'=>'Font Awesome 5 Brands',
+          'far'=>'Font Awesome 5 Free',
+          'fas'=>'Font Awesome 5 Free'
+        ];
+        $html4='';
+        $html6='';
         $html='<html><head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2.min.css" integrity="sha512-WVPV4X/HI/9wClnD+CxFC0qSDE7blZgqZQLjrnEXQUhkm0nkDcoux3ysgIb3oG74MEHobuvEQg7W3XvZK9ZC/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2.min.js" integrity="sha512-E/kDI3wGWMS9Ea/EsDJMduyGSSx/VfdNXAMr/URDQwOAGkGn3uYaZa4Y7bim3ad/6mMA82l+9FxNWl64BR9pkw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+        .select2-results li{font-family: \'Font Awesome 5 Free\',\'Font Awesome 5 Pro\',\'Font Awesome 5 Free\', \'sans-serif\';};
+        </style>
         </head>
         <body>
         <form method="post" action="'.base_url('Generator/controllergenerate').'">
@@ -25,10 +39,21 @@ class Generator extends BaseController
         <p>
 <input type="button" value="Add" onclick="addRow(\'tblClone\');">
 <input type="button" value="Remove Last" onclick="delRow(\'tblClone\');">
-<select id="moduleicon" class="text-primary fa-select select2 form-control fill" name="moduleicon" style="font-family: \'FontAwesome\', \'sans-serif\';" required>';
+<i class="fas fa-ad"></i>
+<select id="moduleicon" class="text-primary fa-select select2 form-control fill" name="moduleicon" style="font-family: \'Font Awesome 5 Brands\',\'Font Awesome 5 Free\', \'sans-serif\';" required>';
                          foreach ($faicons as $key2=>$val2){
+                          // var_dump($key2);
+                          
+                          $k1='';
+                          if($key2!='fa')
+                          foreach ($val2 as $k1 => $v1) {
+                            $html6.='<p style="font-family:\''.$classes[$key2].'\';">&#x'.$fa[$v1].'  = '.$key2.' '.$fa[$v1].' '.$v1.'</p>';
+                            $html4.='<i class="'.$key2.' '.$v1.'"> </i>';
+                            $html.='<option value="'.$v1.'" > &#x'.$fa[$v1].' '.$key2.' '.$v1.' </option>';
+                            # code...
+                          }
                         
-                            $html.='<option value="'.$key2.'" > '.$val2.'  '.$key2.' </option>';
+                            // $html.='<option value="'.$key2.'" > <i class="'.$key2.'">a </i>  '.$key2.' </option>';
                         }
                    $html.='</select>
 </p>
@@ -73,7 +98,12 @@ class Generator extends BaseController
         <input type="submit" value="Save">
         </form>
         <script>
-        document.getElementById("moduleicon").select2();
+        alert($("body").length);
+        $("#moduleicon").select2();
+        </script>
+        <script>
+
+        // document.getElementById("moduleicon").select2();
         function addRow(id)
     { var x=document.getElementById(id).tBodies[0];  //get the table
       var node=x.rows[1].cloneNode(true);    //clone the previous node or row
@@ -113,6 +143,7 @@ class Generator extends BaseController
         </body>
         </html>
         ';
+        // $html.= $html6;
         return $html;
         
     }
@@ -215,6 +246,8 @@ class Generator extends BaseController
         $this->name=$name;
         $this->Path=base_url('uploads/'.strtolower($name));
         $this->fields=$fields;
+        if($name=='')
+        $name='property';
         $q1="CREATE TABLE `".strtolower($name)."` (
   `id` int(255) NOT NULL AUTO_INCREMENT,";
   $modelKeys="  'id' , ";
@@ -661,10 +694,10 @@ $query   = $db->query($q1);
           <div class="form-group col-md-6 mb-3">
             <label for="'.$key.'" class="control-label mb-1">'.ucfirst($key).' </label>
             
-        <? if(isset($CurrentRecord)){ ?>
+        <?php if(isset($CurrentRecord)){ ?>
         <input id="'.$key.'" name="'.$key.'" type="file" class="form-control" value="<?=base_url(\'uploads/'.strtolower($this->name).'s/\'.$'.$key.')?>" >
         <img src="<?=base_url(\'uploads/'.strtolower($this->name).'s/\'.$'.$key.')?>" class="w-100" />
-        <? } else {?>
+        <?php } else { ?>
         <input id="'.$key.'" name="'.$key.'" type="file" class="form-control" value="<?=base_url(\'uploads/'.strtolower($this->name).'s/\'.$'.$key.')?>" '.$required.'>
         <?php } ?>
           </div>
@@ -678,10 +711,10 @@ $query   = $db->query($q1);
           <div class="form-group col-md-6 mb-3">
             <label for="'.$key.'" class="control-label mb-1">'.ucfirst($key).' </label>
             
-        <? if(isset($CurrentRecord)){ ?>
+        <?php if(isset($CurrentRecord)){ ?>
         <input id="'.$key.'" name="'.$key.'" type="file" class="form-control" value="<?=base_url(\'uploads/'.strtolower($this->name).'s/\'.$'.$key.')?>" >
         <p><a href="<?=base_url(\'uploads/'.strtolower($this->name).'s/\'.$'.$key.')?>"> Download </a></p>
-        <? } else {?>
+        <?php } else { ?>
         <input id="'.$key.'" name="'.$key.'" type="file" class="form-control" value="<?=base_url(\'uploads/'.strtolower($this->name).'s/\'.$'.$key.')?>" '.$required.'>
         <?php } ?>
           </div>

@@ -10,7 +10,6 @@
     <form action="<?=base_url('admin/settings/{PathName}')?>" method="post" class="form-horizontal" enctype="multipart/form-data">
       <div class="card-body">
           <h3><?=ucwords(implode(' ',explode('_',$key)))?></h3>
-          <p><?=$val['hint']?></p>
          <div class="row">
             <div class="col-md-9">
                 <?php 
@@ -56,17 +55,6 @@
                         $selected=($key2==$val['value'])?'selected':'';
                         ?>
                             <option value="<?=$key2?>"  <?=($selected)?> > <?=$val2?>  <?=$key2?> </option>
-                        <?php }?>
-                   </select>
-                </div>
-                <?php }elseif($val['type']=='dbmodel'|| $val['type']=='fixedselect'){
-                    $options=$val['options'];?>
-                    <div class="form-group mb-3">
-                    <select class="text-primary fa-select select2 form-control fill" name="<?=$key?>" required>
-                        <?php foreach ($options as $key2=>$val2){
-                        $selected=($key2==$val['value'])?'selected':'';
-                        ?>
-                            <option value="<?=$key2?>"  <?=($selected)?> > <?=$val2?> </option>
                         <?php }?>
                    </select>
                 </div>

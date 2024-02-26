@@ -67,38 +67,8 @@ class {ClassName} extends BaseController
             $key=$value['name'];
             $val=$value['value'];
             $type=$value['type'];
-            $hint=$value['hint'];
-            $jsondata=$value['jsondata'];
-            $options=[];
-            if($type=='dbmodel'){
-                $j=json_decode($jsondata,true);
-                // var_dump($j);
-                // die();
-                $m="\App\Models".'\\'.$j['model'];
-                
-                $model=new $m(); 
-                // $model=$m;
-                // var_dump($model);
-                // die();
-                $records=$model->findAll();
-                foreach ($records as $record)
-                $options[$record['id']]=$record['title'];
-                
-            }
-            
-            if($type=='fixedselect'){
-                $j=json_decode($jsondata);
-                $records=$j;
-                foreach ($records as $rk=>$rv)
-                $options[$rk]=$rv;
-                
-            }
-            
             $settings[$key]['type']=$type;
             $settings[$key]['value']=$val;
-            $settings[$key]['jsondata']=$jsondata;
-            $settings[$key]['hint']=$hint;
-            $settings[$key]['options']=$options;
         }
         
         $data['settings']=$settings;
